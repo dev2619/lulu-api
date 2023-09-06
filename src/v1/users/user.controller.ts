@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -85,5 +86,26 @@ export class UserController {
       where: { id: Number(id) },
       data: updateUserInput,
     });
+  }
+
+  /**
+   * Delete an user
+   */
+  @Delete('/:id')
+  async dropUser(
+    @Param('id', new ValidationPipe({ transform: true })) id: string,
+  ): Promise<UserModel> {
+    const user = await this.userService.user({ id: Number(id) });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    const userWhereUniqueInput: Prisma.UserWhereUniqueInput = {
+      id: Number(id), // Assuming 'id' is the unique identifier field
+    };
+    const deleteUser = await this.userService.deleteUser(userWhereUniqueInput);
+
+    return deleteUser;
   }
 }
