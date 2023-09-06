@@ -2,26 +2,37 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Param,
   Post,
+  Put,
+  Query,
   ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Prisma, User as UserModel } from '@prisma/client';
+import { Prisma, User, User as UserModel } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   /**
-   * Create an user
+   * Obtain all users
    */
-  @Post('create')
-  async signupUser(
-    @Body(new ValidationPipe()) userData: CreateUserDto,
-  ): Promise<UserModel> {
-    return this.userService.createUser(userData);
+  @Get()
+  async getAllUsers(
+    @Query()
+    query: {
+      skip?: number;
+      take?: number;
+      cursor?: Prisma.UserWhereUniqueInput;
+      where?: Prisma.UserWhereInput;
+      orderBy?: Prisma.UserOrderByWithRelationInput;
+    },
+  ): Promise<User[]> {
+    return this.userService.users(query);
   }
 
   /**
@@ -34,6 +45,45 @@ export class UserController {
     const userWhereUniqueInput: Prisma.UserWhereUniqueInput = {
       id: Number(id), // Assuming 'id' is the unique identifier field
     };
-    return this.userService.user(userWhereUniqueInput);
+    const user = await this.userService.user(userWhereUniqueInput);
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    return user;
+  }
+
+  /**
+   * Create an user
+   */
+  @Post('create')
+  async signupUser(
+    @Body(new ValidationPipe()) userData: CreateUserDto,
+  ): Promise<UserModel> {
+    return this.userService.createUser(userData);
+  }
+
+  /**
+   * Update an user
+   */
+  @Put('/:id')
+  async updateUser(
+    @Param('id', new ValidationPipe({ transform: true })) id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<UserModel> {
+    const user = await this.userService.user({ id: Number(id) });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    const updateUserInput: Prisma.UserUpdateInput = {
+      ...updateUserDto,
+    };
+
+    return this.userService.updateUser({
+      where: { id: Number(id) },
+      data: updateUserInput,
+    });
   }
 }

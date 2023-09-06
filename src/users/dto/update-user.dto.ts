@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateUserDto {
+export class UpdateUserDto {
   /**
    * Name of the user
    * @example 'Carlos Andres'
@@ -8,9 +8,15 @@ export class CreateUserDto {
   @IsNotEmpty()
   name: string;
   /**
-   * User email for sign in before
+   * User email
    * @example 'carlos@luluapi.com'
    */
   @IsNotEmpty()
   email: string;
+  // /**
+  //  * User posts
+  //  * @example 'carlos@luluapi.com'
+  //  */
+  // @IsNotEmpty()
+  // posts: PostUpdateManyWithoutAuthorNestedInput;
 }
