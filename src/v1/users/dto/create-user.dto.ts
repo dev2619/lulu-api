@@ -13,4 +13,11 @@ export class CreateUserDto {
    */
   @IsNotEmpty()
   email: string;
+
+  /**
+   * User pass for sign in before
+   * @example '1234'
+   */
+  @IsNotEmpty()
+  password: string;
 }

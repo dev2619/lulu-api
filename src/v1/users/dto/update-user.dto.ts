@@ -7,16 +7,18 @@ export class UpdateUserDto {
    */
   @IsNotEmpty()
   name: string;
+
   /**
    * User email
    * @example 'carlos@luluapi.com'
    */
   @IsNotEmpty()
   email: string;
-  // /**
-  //  * User posts
-  //  * @example 'carlos@luluapi.com'
-  //  */
-  // @IsNotEmpty()
-  // posts: PostUpdateManyWithoutAuthorNestedInput;
+
+  /**
+   * User password
+   * @example '4321'
+   */
+  @IsNotEmpty()
+  password: string;
 }
