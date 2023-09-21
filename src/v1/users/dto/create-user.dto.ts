@@ -20,4 +20,11 @@ export class CreateUserDto {
    */
   @IsNotEmpty()
   password: string;
+
+  /**
+   * User role for sign in before
+   * @example '1'
+   */
+  @IsNotEmpty()
+  role: any;
 }

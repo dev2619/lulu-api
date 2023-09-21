@@ -12,6 +12,17 @@ async function bootstrap() {
 
   // Setup Swagger docs
   const config = new DocumentBuilder()
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token',
+        in: 'header',
+      },
+      'JWT-auth', // This name here is important for matching up with @ApiBearerAuth() in your controller!
+    )
     .setTitle('Lulu Api')
     .setDescription('The lulu API is here ⚡')
     .setVersion('1.0')

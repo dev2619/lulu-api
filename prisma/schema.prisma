@@ -12,12 +12,24 @@ datasource db {
   relationMode      = "prisma"
 }
 
+model Role {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  status Boolean @default(true)
+  Users  User[]
+}
+
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  password String
-  name     String?
-  habits   Habit[]
+  id           Int     @id @default(autoincrement())
+  email        String  @unique
+  password     String
+  name         String?
+  profileImage String?
+  role         Role    @relation(fields: [roleId], references: [id])
+  roleId       Int
+  habits       Habit[]
+
+  @@index([roleId])
 }
 
 model Habit {

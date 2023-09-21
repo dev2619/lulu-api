@@ -8,6 +8,7 @@ async function main() {
       email: 'carlos@luluapi.co',
       name: 'Carlos Andres',
       password: '1234',
+      roleId: 1,
       habits: {
         create: {
           name: 'Wake up 6:00',
@@ -28,6 +29,7 @@ async function main() {
       email: 'olgalu@luluapi.co',
       name: 'Olga Lucia',
       password: '1234',
+      roleId: 2,
       habits: {
         create: {
           name: 'Sleep max 9:45 pm',
@@ -40,7 +42,24 @@ async function main() {
       },
     },
   });
-  console.log({ Carlos, Olga });
+
+  const Admin = await prisma.role.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      name: 'Admin',
+    },
+  });
+
+  const User = await prisma.role.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      name: 'User',
+    },
+  });
+
+  console.log({ Carlos, Olga, Admin, User });
 }
 main()
   .then(async () => {
