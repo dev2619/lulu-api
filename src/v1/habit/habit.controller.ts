@@ -10,7 +10,9 @@ import {
 import { HabitService } from './habit.service';
 import { CreateHabitDto } from './dto/create-habit.dto';
 import { UpdateHabitDto } from './dto/update-habit.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth('JWT-auth')
 @Controller('habit')
 export class HabitController {
   constructor(private readonly habitService: HabitService) {}
