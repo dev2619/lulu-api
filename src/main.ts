@@ -1,14 +1,23 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import {
+  SwaggerModule,
+  DocumentBuilder,
+  SwaggerCustomOptions,
+} from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { VersioningType } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    // logger: ['error', 'warn', 'debug', 'verbose', 'fatal'],
+  });
   const port = 3000;
 
   // Configure CORS to allow all origins
   app.enableCors();
+
+  // Starts listening for shutdown hooks
+  app.enableShutdownHooks();
 
   // Setup Swagger docs
   const config = new DocumentBuilder()
@@ -29,7 +38,8 @@ async function bootstrap() {
     .addTag('lulu')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  const docOptions: SwaggerCustomOptions = { explorer: true };
+  SwaggerModule.setup('api', app, document, docOptions);
 
   // Enable versioning
   app.enableVersioning({
