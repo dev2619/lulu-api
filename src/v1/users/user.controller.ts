@@ -8,7 +8,6 @@ import {
   Post,
   Put,
   Query,
-  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -16,7 +15,6 @@ import { Prisma, User, User as UserModel } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiBearerAuth('JWT-auth')
 @Controller('user')
@@ -26,7 +24,6 @@ export class UserController {
   /**
    * Obtain all users
    */
-  @UseGuards(JwtAuthGuard)
   @Get()
   async getAllUsers(
     @Query()
