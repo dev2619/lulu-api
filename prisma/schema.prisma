@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Set provider to PostgreSQL
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id       String   @id @default(uuid())
+  email    String   @unique
+  password String
+  rol      String
+  eventos  Evento[] // Relation 1:N with Evento
+}
+
+model Evento {
+  id        String   @id @default(uuid())
+  tipo      String
+  datos     Json // Use Json type for dynamic payload
+  timestamp DateTime
+  usuarioId String // Foreign Key for Usuario
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id]) // Relation N:1 with Usuario
+  alertas   Alerta[] // Relation 1:N with Alerta
+}
+
+model Alerta {
+  id          String  @id @default(uuid())
+  tipo        String
+  descripcion String
+  resuelta    Boolean @default(false)
+  resueltaPor String? // Optional field
+  eventoId    String // Foreign Key for Evento
+  evento      Evento  @relation(fields: [eventoId], references: [id]) // Relation N:1 with Evento
+}
+
+model Metrica {
+  id      String   @id @default(uuid())
+  nombre  String
+  valor   Float
+  periodo String
+  fecha   DateTime
+}
