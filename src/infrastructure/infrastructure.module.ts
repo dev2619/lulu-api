@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
-// Remove ApplicationModule import here
 
 // Controllers
 import { EventoController } from './controllers/evento.controller';
 import { AlertaController } from './controllers/alerta.controller';
 import { MetricaController } from './controllers/metrica.controller';
 import { UsuarioController } from './controllers/usuario.controller';
-// Remove the default AppController import if it exists and is not used
-// import { AppController } from './controllers/app.controller';
 
 // In-Memory Repositories (Adapters)
 import { InMemoryUsuarioRepository } from './repositories/in-memory/usuario.repository';
@@ -36,22 +33,17 @@ const repositoryProviders = [
 ];
 
 @Module({
-  imports: [
-    // Remove ApplicationModule import here
-  ],
   controllers: [
     EventoController,
     AlertaController,
     MetricaController,
     UsuarioController,
-    // AppController, // Keep if still needed, remove otherwise
   ],
   providers: [
     ...repositoryProviders,
-    // Add other infrastructure services/providers here if needed
   ],
   exports: [
-    ...repositoryProviders, // Export the repository providers so other modules can inject them
+    ...repositoryProviders,
   ],
 })
 export class InfrastructureModule {}

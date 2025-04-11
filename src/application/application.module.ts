@@ -5,18 +5,21 @@ import { ObtenerMetricasPorPeriodoUseCase } from './use-cases/obtener-metricas-p
 import { AutenticarUsuarioUseCase } from './use-cases/autenticar-usuario.use-case';
 import { InfrastructureModule } from '../infrastructure/infrastructure.module'; // Import InfrastructureModule
 
-const useCases = [
-  RegistrarEventoUseCase,
-  GenerarAlertaUseCase,
-  ObtenerMetricasPorPeriodoUseCase,
-  AutenticarUsuarioUseCase,
-];
-
 @Module({
   imports: [
-    InfrastructureModule, // Import InfrastructureModule to access exported repository providers
+    InfrastructureModule,
   ],
-  providers: [...useCases],
-  exports: [...useCases], // Export use cases
+  providers: [
+    RegistrarEventoUseCase,
+    GenerarAlertaUseCase,
+    ObtenerMetricasPorPeriodoUseCase,
+    AutenticarUsuarioUseCase,
+  ],
+  exports: [
+    RegistrarEventoUseCase,
+    GenerarAlertaUseCase,
+    ObtenerMetricasPorPeriodoUseCase,
+    AutenticarUsuarioUseCase,
+  ],
 })
 export class ApplicationModule {}

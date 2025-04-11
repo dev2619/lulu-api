@@ -13,12 +13,6 @@ const generar_alerta_use_case_1 = require("./use-cases/generar-alerta.use-case")
 const obtener_metricas_por_periodo_use_case_1 = require("./use-cases/obtener-metricas-por-periodo.use-case");
 const autenticar_usuario_use_case_1 = require("./use-cases/autenticar-usuario.use-case");
 const infrastructure_module_1 = require("../infrastructure/infrastructure.module");
-const useCases = [
-    registrar_evento_use_case_1.RegistrarEventoUseCase,
-    generar_alerta_use_case_1.GenerarAlertaUseCase,
-    obtener_metricas_por_periodo_use_case_1.ObtenerMetricasPorPeriodoUseCase,
-    autenticar_usuario_use_case_1.AutenticarUsuarioUseCase,
-];
 let ApplicationModule = class ApplicationModule {
 };
 exports.ApplicationModule = ApplicationModule;
@@ -27,8 +21,18 @@ exports.ApplicationModule = ApplicationModule = __decorate([
         imports: [
             infrastructure_module_1.InfrastructureModule,
         ],
-        providers: [...useCases],
-        exports: [...useCases],
+        providers: [
+            registrar_evento_use_case_1.RegistrarEventoUseCase,
+            generar_alerta_use_case_1.GenerarAlertaUseCase,
+            obtener_metricas_por_periodo_use_case_1.ObtenerMetricasPorPeriodoUseCase,
+            autenticar_usuario_use_case_1.AutenticarUsuarioUseCase,
+        ],
+        exports: [
+            registrar_evento_use_case_1.RegistrarEventoUseCase,
+            generar_alerta_use_case_1.GenerarAlertaUseCase,
+            obtener_metricas_por_periodo_use_case_1.ObtenerMetricasPorPeriodoUseCase,
+            autenticar_usuario_use_case_1.AutenticarUsuarioUseCase,
+        ],
     })
 ], ApplicationModule);
 //# sourceMappingURL=application.module.js.map

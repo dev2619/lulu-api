@@ -9,16 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const application_module_1 = require("./application/application.module");
+const infrastructure_module_1 = require("./infrastructure/infrastructure.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            infrastructure_module_1.InfrastructureModule,
             application_module_1.ApplicationModule,
         ],
-        controllers: [],
-        providers: [],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

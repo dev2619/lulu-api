@@ -39,7 +39,6 @@ let InfrastructureModule = class InfrastructureModule {
 exports.InfrastructureModule = InfrastructureModule;
 exports.InfrastructureModule = InfrastructureModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
         controllers: [
             evento_controller_1.EventoController,
             alerta_controller_1.AlertaController,
